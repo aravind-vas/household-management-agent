@@ -1,0 +1,8 @@
+# real config & secrets never committed
+.env
+*.env
+!.env.example
+config/env
+__pycache__/
+*.pyc
+.DS_Store

@@ -1,0 +1,61 @@
+# EXAMPLE household knowledge base — entirely synthetic.
+# Personas and brands below are fictional placeholders.
+
+household:
+  members:
+    - id: adult-a
+      display: "Adult A"
+      dietary:
+        excludes: [beef, lamb, pork]        # absolute: no red meat
+        proteins_allowed: [chicken, eggs]   # everything else vegetarian
+        variants:
+          paneer: low-fat                    # split the buy; never serve the default
+    - id: adult-b
+      display: "Adult B"
+      dietary:
+        excludes: []
+        variants: {}
+    - id: child-a
+      display: "Child A"
+      pinned_products:
+        milk:
+          brand: "GreenPastures Organic Toddler Milk"
+          notes: "never substituted, never shared"
+
+  brand_tiers:
+    # applies only to GENERIC requests (no explicit instruction, no pin)
+    - rank: 1
+      brand: "Zesta Naturals"
+      notes: "preferred for packaged staples when rating > 4.4"
+    - rank: 2
+      brand: "Crown Staples"
+      notes: "trusted fallback across salt, pulses, tea"
+
+  staples:
+    milk.family: "DailyToned Standard Milk"
+    salt: "Crown Staples Iodised Salt"
+    cooking_oil: "Zesta Naturals Cold-Pressed Oil"
+
+  delivery:
+    default: home
+    addresses:
+      - label: home
+        display: "Home (primary)"
+        # real address supplied at deploy time — never committed
+      - label: parents
+        display: "Parents' place"
+    fee_optimization:
+      free_delivery_threshold_hint: "check store minimum; add needed non-perishables rather than pay the fee"
+
+  dietary_shared:
+    hidden_substitutes:
+      oyster_sauce: "vegetarian mushroom oyster sauce"
+      fish_sauce: "soy sauce + pinch of sugar"
+      shrimp_paste: "vegetarian curry paste"
+      gelatin: "agar-agar"
+      worcestershire: "vegetarian Worcestershire (no anchovies)"
+    protein_anchors: [tofu, paneer, beans, lentils, chickpeas, greek-yogurt, eggs]
+
+  recurring_jobs:
+    - weekly staples restock (Sun)
+    - meal-plan draft (Sat)

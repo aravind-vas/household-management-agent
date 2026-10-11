@@ -1,0 +1,33 @@
+# Example agent configuration (names vary by agent framework).
+# The pattern: skills for procedure, knowledge base for facts,
+# sender policy for privilege.
+
+agent:
+  name: household-agent
+  model: your-model-of-choice
+
+knowledge_base:
+  path: knowledge-base/example-household.yaml   # swap for your private instance
+
+skills:
+  - skills/swiggy-ordering
+  - skills/home-meal-prep
+  - skills/guest-link-clipboard
+
+# Per-sender toolsets are resolved by security/guest_sandbox.py —
+# do NOT grant toolsets here; the policy gate is the single source.
+channels:
+  - type: whatsapp
+    adapter: webhook
+    messaging_window_hours: 24      # outside window: stay silent
+    media:
+      voice_transcription: true
+      max_inline_document_bytes: 102400
+
+commerce:
+  provider: swiggy                  # cart/checkout/payment-status MCP tools
+  require_bill_confirmation: true   # mandatory pre-checkout breakdown
+
+notes:
+  per_guest_files: true
+  untrusted_content_headers: true   # label guest-origin content
